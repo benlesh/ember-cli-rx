@@ -23,6 +23,8 @@ the component usage
   {{my-comp barClickAction="barWasClicked" foo=val}}
 */
 
+import actionScheduler from '../schedulers/ember-action-scheduler';
+
 export default function component(mixins, setupFn) {
   if(arguments.length === 1) {
     setupFn = mixins;
@@ -68,10 +70,20 @@ Ember.mixin(RxComponentContext.prototype, {
     if(!this.instance[observableKey]) {
       this.instance[privateKey] = defaultValue;
       this.instance[observableKey] = new Rx.BehaviorSubject(defaultValue);
-      Ember.defineProperty(this.instance, name, Ember.computed({
-        get: function () { return this[privateKey]; },
-        set: function (val) { this[privateKey] = val; this[observableKey].onNext(val); }
+
+      var initialValue = this.instance[name];
+
+      Ember.defineProperty(this.instance, name, Ember.computed(function(key, val) {
+        if(arguments.length > 1) {
+          this[privateKey] = val; 
+          this[observableKey].onNext(val);
+        }
+        return this[privateKey];
       }));
+
+      if(typeof initialValue !== 'undefined') {
+        this.instance.set(name, initialValue);
+      }
     }
     return this.instance[observableKey];
   },
@@ -102,7 +114,7 @@ Ember.mixin(RxComponentContext.prototype, {
     var self = this;
     return {
       when: function (observable) {
-        self.instance._disposable.add(observable.subscribe(function (x) {
+        self.instance._disposable.add(observable.observeOn(actionScheduler(self.instance)).subscribe(function (x) {
           self.instance.set(name, x);
         }));
       }
@@ -112,6 +124,7 @@ Ember.mixin(RxComponentContext.prototype, {
   action: function (name) {
     if(!this.instance._rxActions[name]) {
       var subject = new Rx.Subject();
+      this.instance._actions = this.instance._actions || {};
       this.instance._actions[name] = function() {
         var args = [].slice.call(arguments);
         subject.onNext(args);

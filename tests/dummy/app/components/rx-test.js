@@ -1,6 +1,26 @@
 import rxComponent from 'ember-cli-rx/helpers/component';
 
 export default rxComponent((comp) => {
-  var i = 0;
-  comp.update('output').when(comp.$('button').on('click').map(() => i++));
+
+  var dateStrings = comp.property('input', 'original').merge(comp.action('iWantADate').map(() => new Date()).map(d => d.toString()));
+
+  comp.update('output').when(dateStrings);
 });
+
+
+// export default Ember.Component.extend({
+
+//   actions: {
+//     iWantADate: function () {
+//       this.set('output', (new Date()).toString());
+//     }
+//   }
+// });
+
+
+// class Foo {
+//   zippedProps = zip(['a','b'], (a,b) => a + b);
+
+//   @readStream('zippedProps'))
+//   output = '';
+// }
