@@ -60,7 +60,20 @@ Ember.mixin(RxComponentContext.prototype, {
   $: function (selector) {
     var self = this;
     return {
-      on: function (eventName) { return Rx.Observable.fromEvent(self.instance.$(selector), eventName); }
+      on: function (eventName) { 
+        return Rx.Observable.create(function(obs) {
+          var root = self.instance.$();
+          var handler = function(e) {
+            obs.onNext(e);
+          };
+
+          root.on(eventName, selector, handler);
+
+          return function(){
+            root.off(eventName, selector, handler);
+          };
+        });
+      }
     };
   },
 

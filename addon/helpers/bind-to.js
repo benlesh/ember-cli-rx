@@ -14,6 +14,13 @@ export default function bindTo(sourcePropName) {
     var subscribedTo = backingPropName + '_observable';
     var observable = this.get(sourcePropName);
 
+    if(!this._bindToSubscriptions) {
+      this._bindToSubscriptions = new Rx.CompositeDisposable();
+      this.on('willDestroy', this, function(){
+        this._bindToSubscriptions.dispose();
+      });
+    }
+
     if(this[subscribedTo] !== observable){
       this[subscribedTo] = observable;
       var backingDisposable = backingPropName + '_disposable';
@@ -21,20 +28,13 @@ export default function bindTo(sourcePropName) {
 
       if(!disposable) {
         disposable = this[backingDisposable] = new Rx.SerialDisposable();
-        var willDestroy = this.willDestroy;
-
-        this.willDestroy = function() {
-          disposable.dispose();
-          if(willDestroy) {
-            return willDestroy.apply(this, arguments);
-          }
-        };
+        this._bindToSubscriptions.add(disposable);
       }
 
       disposable.setDisposable(observable.observeOn(emberActionScheduler(self)).subscribe(function(nextValue) {
         self.set(key, nextValue);
       }, function(err) {
-        console.error('Error binding property: %o', err);
+        Ember.Logger.error('Error binding property: %o', err);
         self.set(key, undefined);
       }));
     }

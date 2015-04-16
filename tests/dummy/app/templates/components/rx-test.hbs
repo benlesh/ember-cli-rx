@@ -1,5 +1,68 @@
-<h3>This is a test</h3>
+<!-- HACK in some style, yo -->
+<style type="text/css">
+  .rx-calc {
+    width: 200px;
+    height: 300px;
+    padding: 20px;
+    border: 3px outset gray;
+  }
 
-<button {{action 'iWantADate'}}>Give Me A Date</button>
+  .rx-calc-row {
+    height: 50px;
+    margin: 0;
+  }
 
-Your Date Is: {{output}}
+  .rx-calc-display {
+    text-align: right;
+    display: inline-block;
+    width: 180px;
+    height: 1em;
+    padding: 6px;
+    font-family: monospace;
+    font-size: 3em;
+    border: 3px inset gray;
+    margin: 0;
+  }
+
+  .rx-calc-button {
+    float: left;
+    width: 50px;
+    height: 50px;
+    font-family: monospace;
+    font-size: 2em;
+  }
+</style>
+
+<div class="rx-calc">
+  <div class="rx-calc-display">{{display}}</div>
+
+  <div class="rx-calc-buttons">
+    <div class="rx-calc-button-row">
+      <button class="rx-calc-button" {{action "num" 7}}>7</button>
+      <button class="rx-calc-button" {{action "num" 8}}>8</button>
+      <button class="rx-calc-button" {{action "num" 9}}>9</button>
+      <button class="rx-calc-button" {{action "divide"}}>/</button>
+    </div>
+    <div class="rx-calc-button-row">
+      <button class="rx-calc-button" {{action "num" 4}}>4</button>
+      <button class="rx-calc-button" {{action "num" 5}}>5</button>
+      <button class="rx-calc-button" {{action "num" 6}}>6</button>
+      <button class="rx-calc-button" {{action "multiply"}}>x</button>
+    </div>
+    <div class="rx-calc-button-row">
+      <button class="rx-calc-button" {{action "num" 1}}>1</button>
+      <button class="rx-calc-button" {{action "num" 2}}>2</button>
+      <button class="rx-calc-button" {{action "num" 3}}>3</button>
+      <button class="rx-calc-button" {{action "subtract"}}>-</button>
+    </div>
+    <div class="rx-calc-button-row">
+      <button class="rx-calc-button" {{action "equals"}}>=</button>
+      <button class="rx-calc-button" {{action "num" 0}}>0</button>
+      <button class="rx-calc-button" {{action "dot"}}>.</button>
+      <button class="rx-calc-button" {{action "add"}}>+</button>
+    </div>
+    <div class="rx-calc-button-row">
+      <button class="rx-calc-button" {{action "clear"}}>C</button>
+    </div>
+  </div>
+</div>
