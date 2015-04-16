@@ -12,8 +12,10 @@ before_install:
   - "npm install -g npm@^2"
 
 install:
+  - npm cache clean
   - npm install -g bower
   - npm install
+  - bower cache clean
   - bower install
 
 script:
