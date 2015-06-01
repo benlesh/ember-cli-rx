@@ -1,5 +1,7 @@
 # ember-cli-rx change log
 
+- 0.2.7
+  - update RxJS to 2.5.2
 - 0.2.6
   - add `tmp` directory to .gitignore
 - 0.2.5
