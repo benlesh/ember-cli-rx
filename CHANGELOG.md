@@ -1,5 +1,9 @@
 # ember-cli-rx change log
 
+- 0.2.6
+  - add `tmp` directory to .gitignore
+- 0.2.5
+  - fixed issue where run loop not started during tests.
 - 0.2.4
   - upgrade Ember-CLI to 0.2.3
   - upgrade Ember to 1.10.0
