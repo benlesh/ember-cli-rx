@@ -6,9 +6,7 @@ var SingleAssignmentDisposable = Rx.SingleAssignmentDisposable;
 function scheduleNow(state, action) {
 	var scheduler = this;
 	var disposable = new SingleAssignmentDisposable();
-	Ember.run.join(this, function() {
-		scheduleEmberAction(disposable, this._queue, this._target, state, action, scheduler);
-	});
+	scheduleEmberAction(disposable, this._queue, this._target, state, action, scheduler);
 	return disposable;
 }
 
@@ -28,10 +26,12 @@ function scheduleAbsolute(state, dueTime, action) {
 }
 
 function scheduleEmberAction(disposable, queue, target, state, action, scheduler) {
-	Ember.run.schedule(queue, target, function() {
-		if(!disposable.isDisposed) {
-			disposable.setDisposable(action(scheduler, state));
-		}
+	Ember.run.join(this, function() {
+		Ember.run.schedule(queue, target, function() {
+			if(!disposable.isDisposed) {
+				disposable.setDisposable(action(scheduler, state));
+			}
+		});
 	});
 }
 
