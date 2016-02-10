@@ -28,7 +28,7 @@ test('it should always give the latest supplied observable and only require one 
 		input: Rx.Observable.fromArray([23, 42]),
 	});
 
-	var subscription = foo.get('input').forEach(function(x) {
+	foo.get('input').forEach(function(x) {
 		deepEqual(x, expectedResults[i++]);
 
 		if(i === expectedResults.length) {
