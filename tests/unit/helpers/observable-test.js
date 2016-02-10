@@ -4,17 +4,17 @@ import { observable } from 'ember-cli-rx/helpers';
 
 module('helpers/observable');
 
-test('it should always supply an observable', function(){
+test('it should always supply an observable', function(assert){
 	var FooClass = Ember.Object.extend({
 		input: observable()
 	});
 
 	var foo = FooClass.create();
 
-	ok(foo.get('input') instanceof Rx.Observable);
+	assert.ok(foo.get('input') instanceof Rx.Observable);
 });
 
-test('it should always give the latest supplied observable and only require one subscription', function(){
+test('it should always give the latest supplied observable and only require one subscription', function(assert){
 	stop();
 
 	var FooClass = Ember.Object.extend({
@@ -29,7 +29,7 @@ test('it should always give the latest supplied observable and only require one 
 	});
 
 	foo.get('input').forEach(function(x) {
-		deepEqual(x, expectedResults[i++]);
+		assert.deepEqual(x, expectedResults[i++]);
 
 		if(i === expectedResults.length) {
 			start();

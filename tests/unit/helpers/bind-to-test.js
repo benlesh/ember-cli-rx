@@ -4,13 +4,15 @@ import { bindTo } from 'ember-cli-rx/helpers';
 
 module('helpers/bind-to');
 
-test('it should bind to an observable in the specified property', function(){
+test('it should bind to an observable in the specified property', function(assert){
   var subject = new Rx.Subject();
 
   var FooClass = Ember.Component.extend(Ember.Evented, {
-    things: function(){
-      return subject;
-    }.property(),
+    things: Ember.computed({
+      get() {
+        return subject;
+      }
+    }),
 
     thing: bindTo('things'),
   });
@@ -23,7 +25,7 @@ test('it should bind to an observable in the specified property', function(){
     thing = foo.get('thing');
   });
 
-  equal(thing, undefined, 'property starts undefined');
+  assert.equal(thing, undefined, 'property starts undefined');
 
   Ember.run(function() {
     subject.onNext('something');
