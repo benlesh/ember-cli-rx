@@ -7,6 +7,7 @@ module('helpers/action');
 var run = Ember.run;
 
 test('it should create an observable of action arguments', function(assert){
+  var done = assert.async();
 	var expectedResults = [
 		[1,2,3],
 		['foo', 'bar', 'baz'],
@@ -28,7 +29,7 @@ test('it should create an observable of action arguments', function(assert){
 		if(i === expectedResults.length) {
       done();
 		}
-	});
+  });
 
   run(ctrl, 'send', 'doSomething', 1, 2, 3);
   run(ctrl, 'send', 'doSomething', 'foo', 'bar', 'baz');

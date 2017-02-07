@@ -20,28 +20,30 @@ export default function computedObservable(mapFn, deps) {
     deps = [];
   }
 
-  return Ember.computed(function(key) {
-    var backingField = '_' + key;
-    if(!this[backingField]) {
-      var depProps = deps.map(function(k) {
-        var arrayIndex = k.indexOf('.[]');
-        return arrayIndex !== -1 ? k.substring(0, arrayIndex) : k;
-      });
-
-      this[backingField] = new Rx.BehaviorSubject(this.getProperties.apply(this, depProps));
-
-      var handler = function(){
-        var props = this.getProperties.apply(this, depProps);
-        this[backingField].onNext(props);
-      };
-
-      deps.forEach(function(depKey) {
-        this.addObserver(depKey, this, function(){
-          Ember.run.once(this, handler);
+  return Ember.computed({
+    get(key) {
+      var backingField = '_' + key;
+      if(!this[backingField]) {
+        var depProps = deps.map(function(k) {
+          var arrayIndex = k.indexOf('.[]');
+          return arrayIndex !== -1 ? k.substring(0, arrayIndex) : k;
         });
-      }, this);
-    }
 
-    return mapFn(this[backingField].asObservable());
+        this[backingField] = new Rx.BehaviorSubject(this.getProperties.apply(this, depProps));
+
+        var handler = function(){
+          var props = this.getProperties.apply(this, depProps);
+          this[backingField].onNext(props);
+        };
+
+        deps.forEach(function(depKey) {
+          this.addObserver(depKey, this, function(){
+            Ember.run.once(this, handler);
+          });
+        }, this);
+      }
+
+      return mapFn(this[backingField].asObservable());
+    }
   });
 }

@@ -8,7 +8,7 @@ import Rx from "rxjs";
 
   ### Example
 
-        Ember.ObjectController.extend({
+        Ember.Controller.extend({
           foo: null,
 
           foos: observableFrom('foo'),
