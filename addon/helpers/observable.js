@@ -1,5 +1,7 @@
 /* globals Ember */
 
+import Rx from "Rx";
+
 /**
   Creates a property that accepts Rx.Observables
   and returns a single observable that represents the latest observable

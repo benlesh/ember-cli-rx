@@ -1,6 +1,6 @@
 /* globals Ember */
 import emberActionScheduler from '../schedulers/ember-action-scheduler';
-
+import Rx from "Rx";
 /**
   @method bindTo
   @param sourcePropName {String} the name of the property containing the Observable to bind this
@@ -39,7 +39,7 @@ export default function bindTo(sourcePropName) {
       disposable.setDisposable(observable.observeOn(emberActionScheduler(self)).subscribe(function(nextValue) {
         self.set(key, nextValue);
       }, function(err) {
-        console.error('Error binding property: %o', err);
+        console.log('Error binding property:' + err);
         self.set(key, undefined);
       }));
     }

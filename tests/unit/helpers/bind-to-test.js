@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-import { bindTo } from 'ember-cli-rx/helpers';
+import { bindTo } from 'ember-cli-rxjs/helpers';
 
 module('helpers/bind-to');
 
@@ -54,7 +54,7 @@ test('it should assert components only', function(){
     something: Rx.Observable.return(42),
     whatever: bindTo('something')
   });
-  
+
   throws(function(){
     Ember.run(function(){
       var foo = FooClass.create();

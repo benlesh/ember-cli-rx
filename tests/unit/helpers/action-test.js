@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { action, observable } from 'ember-cli-rx/helpers';
+import { action, observable } from 'ember-cli-rxjs/helpers';
 
 module('helpers/action');
 

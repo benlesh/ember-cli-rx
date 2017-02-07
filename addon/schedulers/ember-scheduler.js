@@ -1,4 +1,5 @@
 import Ember from "ember";
+import Rx from "Rx";
 
 var Scheduler = Rx.Scheduler;
 var SingleAssignmentDisposable = Rx.SingleAssignmentDisposable;

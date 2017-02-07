@@ -1,5 +1,6 @@
 /* globals Ember */
 
+import Rx from "Rx";
 /**
   Creates an observable from observed Ember property changes.
 

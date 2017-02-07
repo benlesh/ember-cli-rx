@@ -1,3 +1,6 @@
+import Rx from "Rx";
+
+
 /**
   Wires up an action to feed an observable property.
 
