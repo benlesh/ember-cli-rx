@@ -1,6 +1,6 @@
 /* globals Ember */ //HACK: because I'm sharing this with rx-ember
 
-import Rx from "Rx";
+import Rx from "rxjs";
 
 /**
   Creates a a property that returns an observable which is created

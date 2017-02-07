@@ -1,22 +1,20 @@
 import Ember from 'ember';
 import { action, observable } from 'ember-cli-rxjs/helpers';
+import { module, test } from 'qunit';
 
 module('helpers/action');
 
 var run = Ember.run;
 
-test('it should create an observable of action arguments', function(){
-	stop();
-
+test('it should create an observable of action arguments', function(assert){
 	var expectedResults = [
 		[1,2,3],
 		['foo', 'bar', 'baz'],
 		['Ocelot', 'buyer\'s', 'remorse']
 	];
 
-	var FooController = Ember.ObjectController.extend({
+	var FooController = Ember.Controller.extend({
 		doSomethings: observable(),
-
 		actions: {
 			doSomething: action('doSomethings')
 		}
@@ -25,11 +23,10 @@ test('it should create an observable of action arguments', function(){
 	var ctrl = FooController.create({});
 	var i = 0;
 
-	ctrl.get('doSomethings').forEach(function(args) {
-		deepEqual(args, expectedResults[i++]);
-
+	ctrl.get('doSomethings').forEach((args) => {
+		assert.deepEqual(args, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+      done();
 		}
 	});
 

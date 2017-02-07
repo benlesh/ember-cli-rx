@@ -9,5 +9,5 @@
     });
   }
 
-  generateModule('Rx', { 'default': Rx });
+  generateModule('rxjs', { 'default': Rx });
 })();

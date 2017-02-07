@@ -1,6 +1,6 @@
 /* globals Ember */
 
-import Rx from "Rx";
+import Rx from "rxjs";
 
 /**
   Creates a property that accepts Rx.Observables

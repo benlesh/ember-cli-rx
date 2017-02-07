@@ -1,4 +1,4 @@
-import Rx from "Rx";
+import Rx from "rxjs";
 
 
 /**

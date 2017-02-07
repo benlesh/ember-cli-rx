@@ -1,9 +1,10 @@
 import Ember from 'ember';
 import { computedObservable } from 'ember-cli-rxjs/helpers';
+import { module, test, start, stop } from 'qunit';
 
 module('helpers/computed-observable');
 
-test('it should create an observable mapped from a stream of dependency changes', function(){
+test('it should create an observable mapped from a stream of dependency changes', function(assert){
 	stop();
 
 	var FooClass = Ember.Object.extend({
@@ -23,7 +24,7 @@ test('it should create an observable mapped from a stream of dependency changes'
 	var expectedResults = ['foobar', 'whatever'];
 
 	foo.get('testStream').forEach(function(d) {
-		equal(d, expectedResults[i++]);
+		assert.equal(d, expectedResults[i++]);
 
 		if(i === expectedResults.length) {
 			start();
@@ -37,8 +38,8 @@ test('it should create an observable mapped from a stream of dependency changes'
 });
 
 
-test('it should handle property names with .[] in them', function(){
-	stop();
+test('it should handle property names with .[] in them', function(assert){
+	var done = assert.async();
 
 	var FooClass = Ember.Object.extend({
 		testStream: computedObservable(function(deps) {
@@ -57,10 +58,9 @@ test('it should handle property names with .[] in them', function(){
 	var expectedResults = ['foo,bar', 'foo,what,ever'];
 
 	foo.get('testStream').forEach(function(d) {
-		equal(d, expectedResults[i++]);
-
+		assert.equal(d, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+			done();
 		}
 	});
 

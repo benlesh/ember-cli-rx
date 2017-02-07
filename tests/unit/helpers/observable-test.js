@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { observable } from 'ember-cli-rxjs/helpers';
-
+import { module, test } from 'qunit';
+import Rx from "rxjs";
 
 module('helpers/observable');
 
@@ -15,7 +16,7 @@ test('it should always supply an observable', function(assert){
 });
 
 test('it should always give the latest supplied observable and only require one subscription', function(assert){
-	stop();
+	let done = assert.async();
 
 	var FooClass = Ember.Object.extend({
 		input: observable()
@@ -32,9 +33,11 @@ test('it should always give the latest supplied observable and only require one 
 		assert.deepEqual(x, expectedResults[i++]);
 
 		if(i === expectedResults.length) {
-			start();
+      done();
+      return;
 		}
 	});
 
 	foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
+  done();
 });
