@@ -1,6 +1,7 @@
 /* globals Ember */
 
 import Rx from "rxjs";
+import buildKey from "../utils/internal-key";
 
 /**
   Creates a property that accepts Rx.Observables
@@ -12,20 +13,18 @@ import Rx from "rxjs";
   @method observable
   @return Ember.ComputedProperty
 */
-function _buildKey(key) {
-  return `_${key}`;
-}
+
 export default function observable() {
   return Ember.computed({
     get(key) {
-      let backingField = _buildKey(key);
+      let backingField = buildKey(key);
       if(!this[backingField]) {
         this[backingField] = new Rx.BehaviorSubject(Rx.Observable.empty());
       }
       return this[backingField]['switch']();
     },
     set(key, value) {
-      let backingField = _buildKey(key);
+      let backingField = buildKey(key);
       if(!this[backingField]) {
         this[backingField] = new Rx.BehaviorSubject(Rx.Observable.empty());
       }

@@ -30,22 +30,24 @@ export default function observableFrom(propName) {
     prop = propName.substring(0, arrIndex);
   }
 
-  return Ember.computed(function() {
-    var self = this;
-    return Rx.Observable.create(function(observer) {
-      var fn = function() {
-        observer.onNext(self.get(prop));
-      };
+  return Ember.computed(propName, {
+    get(/*key*/) {
+      var self = this;
+      return Rx.Observable.create(function(observer) {
+        var fn = function() {
+          observer.onNext(self.get(prop));
+        };
 
-      self.addObserver(propName, fn);
+        self.addObserver(propName, self, fn);
 
-      // this eager consumption is necessary due to lazy CP optimization preventing
-      // observers from properly attaching unless the property is eagerly consumed
-      self.get(propName);
+        // this eager consumption is necessary due to lazy CP optimization preventing
+        // observers from properly attaching unless the property is eagerly consumed
+        self.get(propName);
 
-      return function(){
-        self.removeObserver(propName, fn);
-      };
-    });
+        return function(){
+          self.removeObserver(propName,self, fn);
+        };
+      });
+    }
   });
 }

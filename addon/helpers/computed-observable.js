@@ -1,7 +1,6 @@
-/* globals Ember */ //HACK: because I'm sharing this with rx-ember
-
+import Ember from "ember";
 import Rx from "rxjs";
-
+import buildKey from "../utils/internal-key";
 /**
   Creates a a property that returns an observable which is created
   from observed dependent property changes on the Ember object,
@@ -22,7 +21,7 @@ export default function computedObservable(mapFn, deps) {
 
   return Ember.computed({
     get(key) {
-      var backingField = '_' + key;
+      var backingField = buildKey(key);
       if(!this[backingField]) {
         var depProps = deps.map(function(k) {
           var arrayIndex = k.indexOf('.[]');

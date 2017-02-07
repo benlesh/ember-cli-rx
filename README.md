@@ -1,6 +1,6 @@
 # ember-cli-rxjs
 
-This README outlines the details of collaborating on this Ember addon.
+Ember Addon allow to use rxjs 4.x.
 
 ## Installation
 

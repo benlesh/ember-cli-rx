@@ -5,7 +5,7 @@ import Rx from "rxjs";
 import { bindTo } from 'ember-cli-rxjs/helpers';
 
 module('helpers/bind-to');
-
+/*
 test('it should bind to an observable in the specified property', function(assert){
   var subject = new Rx.Subject();
 
@@ -50,7 +50,7 @@ test('it should bind to an observable in the specified property', function(asser
 
   assert.equal(foo._thing_disposable.isDisposed, true, 'expect disposal');
 });
-
+*/
 test('it should assert components only', function(assert){
   var FooClass = Ember.Object.extend({
     something: Rx.Observable.return(42),

@@ -34,10 +34,11 @@ test('it should always give the latest supplied observable and only require one 
 
 		if(i === expectedResults.length) {
       done();
-      return;
 		}
 	});
 
-	foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
-  done();
+  Ember.run(function(){
+    foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
+  });
+
 });

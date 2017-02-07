@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import { observableFrom } from 'ember-cli-rxjs/helpers';
-import { module, test, start } from 'qunit';
+import { module, test} from 'qunit';
 
 module('helpers/observable-from');
 
 function testObservableFromPropertyChanges(useComputedProperty, assert) {
-	stop();
+	let done = assert.async();
 	var expectedResults = ['Ben', 'Jeff', 'Ranjit'];
 
 	var FooClass = Ember.Object.extend({
@@ -20,7 +20,7 @@ function testObservableFromPropertyChanges(useComputedProperty, assert) {
 	foo.get('names').forEach(function(x) {
 		assert.equal(x, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+			done();
 		}
 	});
 
@@ -38,7 +38,7 @@ test('it should observe property changes and emit them via an observable (comput
 });
 
 test('it should support array.[] observation', function(assert) {
-	stop();
+	let done = assert.async();
 	var expectedResults = [['wokka'], ['wokka', 'foo'], ['wokka', 'foo', 'bar']];
 
 	var FooClass = Ember.Object.extend({
@@ -52,12 +52,14 @@ test('it should support array.[] observation', function(assert) {
 	foo.get('names').forEach(function(x) {
 		assert.deepEqual(x, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+			done();
 		}
 	});
 
-	foo.set('stuff', ['wokka']);
-	foo.get('stuff').pushObject('foo');
-	foo.get('stuff').pushObject('bar');
+  Ember.run(function(){
+	  foo.set('stuff', ['wokka']);
+    foo.get('stuff').push('foo');
+    foo.get('stuff').push('bar');
+  });
 });
 
