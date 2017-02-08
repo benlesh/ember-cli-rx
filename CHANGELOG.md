@@ -1,5 +1,8 @@
 # ember-cli-rx change log
 
+- 0.3.0
+  - upgrade RxJS 4.x
+  - upgrade Ember to 2.11
 - 0.2.7
   - update RxJS to 2.5.2
 - 0.2.6
