@@ -30,7 +30,7 @@ export default function observableFrom(propName) {
     prop = propName.substring(0, arrIndex);
   }
 
-  return Ember.computed(propName, {
+  return Ember.computed({
     get(/*key*/) {
       var self = this;
       return Rx.Observable.create(function(observer) {
@@ -48,6 +48,8 @@ export default function observableFrom(propName) {
           self.removeObserver(propName,self, fn);
         };
       });
+    },
+    set() {
     }
   });
 }

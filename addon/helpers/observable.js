@@ -24,11 +24,8 @@ export default function observable() {
       return this[backingField]['switch']();
     },
     set(key, value) {
-      let backingField = buildKey(key);
-      if(!this[backingField]) {
-        this[backingField] = new Rx.BehaviorSubject(Rx.Observable.empty());
-      }
       var next = value && value instanceof Rx.Observable ? value : Rx.Observable.empty();
+      let backingField = buildKey(key);
       this[backingField].onNext(next);
     }
   })

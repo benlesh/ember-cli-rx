@@ -5,6 +5,7 @@ import Rx from "rxjs";
 import { bindTo } from 'ember-cli-rxjs/helpers';
 
 module('helpers/bind-to');
+// TODO: should use regular component test.
 /*
 test('it should bind to an observable in the specified property', function(assert){
   var subject = new Rx.Subject();

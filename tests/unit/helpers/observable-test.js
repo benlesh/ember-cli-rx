@@ -25,19 +25,23 @@ test('it should always give the latest supplied observable and only require one 
 	var i = 0;
 	var expectedResults = [23, 42, 'banana', 'stand'];
 
-	var foo = FooClass.create({
-		input: Rx.Observable.fromArray([23, 42]),
-	});
+  // DO NOT INIT observable when create
+  /*
+  var foo = FooClass.create({
+    input: Rx.Observable.fromArray([23, 42])
+  });
+  */
+	var foo = FooClass.create();
 
 	foo.get('input').forEach(function(x) {
 		assert.deepEqual(x, expectedResults[i++]);
-
 		if(i === expectedResults.length) {
       done();
 		}
 	});
 
   Ember.run(function(){
+    foo.set("input", Rx.Observable.fromArray([23, 42]));
     foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
   });
 
