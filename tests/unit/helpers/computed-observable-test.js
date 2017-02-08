@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { computedObservable } from 'ember-cli-rxjs/helpers';
+import { computedObservable } from 'ember-rxjs/helpers';
 import { module, test } from 'qunit';
 
 module('helpers/computed-observable');

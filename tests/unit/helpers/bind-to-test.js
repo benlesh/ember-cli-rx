@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import Rx from "rxjs";
 
-import { bindTo } from 'ember-cli-rxjs/helpers';
+import { bindTo } from 'ember-rxjs/helpers';
 
 module('helpers/bind-to');
 // TODO: should use regular component test.

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { observableFrom } from 'ember-cli-rxjs/helpers';
+import { observableFrom } from 'ember-rxjs/helpers';
 import { module, test} from 'qunit';
 
 module('helpers/observable-from');

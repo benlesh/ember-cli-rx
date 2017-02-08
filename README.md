@@ -1,11 +1,14 @@
-# ember-cli-rxjs
+# ember-rxjs
 
-Ember Addon allow to use rxjs 4.x.
+Forked from https://github.com/blesh/ember-cli-rx. 
+
+Ember Addon allow to use rxjs 4.x in ember way
+
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-rxjs`
+* `git clone https://github.com/systembugtj/ember-rxjs.git` this repository
+* `cd ember-rxjs`
 * `npm install`
 * `bower install`
 

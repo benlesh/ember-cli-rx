@@ -1,12 +1,16 @@
 {
-  "name": "ember-cli-rxjs",
+  "name": "ember-rxjs",
   "version": "0.2.7",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "author": {
+    "name" : "Albert Li",
+    "email" : "albert_lee@hotmail.com",
+    "url" : "http://www.systembug.me/"
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
