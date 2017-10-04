@@ -1,6 +1,7 @@
 /* globals Ember */
 
-import Rx from "rxjs";
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import buildKey from "../utils/internal-key";
 
 /**
@@ -19,12 +20,12 @@ export default function observable() {
     get(key) {
       let backingField = buildKey(key);
       if(!this[backingField]) {
-        this[backingField] = new Rx.BehaviorSubject(Rx.Observable.empty());
+        this[backingField] = new BehaviorSubject(Observable.empty());
       }
       return this[backingField]['switch']();
     },
     set(key, value) {
-      var next = value && value instanceof Rx.Observable ? value : Rx.Observable.empty();
+      var next = value && value instanceof Observable ? value : Observable.empty();
       let backingField = buildKey(key);
       this[backingField].onNext(next);
     }

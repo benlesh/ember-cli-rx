@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { observable } from 'ember-rxjs/helpers';
 import { module, test } from 'qunit';
-import Rx from "rxjs";
+import Rx from "rxjs/Rx";
 
 module('helpers/observable');
 

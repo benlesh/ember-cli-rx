@@ -1,6 +1,6 @@
 /* globals Ember */
 import emberActionScheduler from '../schedulers/ember-action-scheduler';
-import Rx from "rxjs";
+import Rx from "rxjs/Rx";
 /**
   @method bindTo
   @param sourcePropName {String} the name of the property containing the Observable to bind this

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
-import Rx from "rxjs";
+import Rx from "rxjs/Rx";
 
 import { bindTo } from 'ember-rxjs/helpers';
 

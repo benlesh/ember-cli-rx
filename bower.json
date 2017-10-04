@@ -1,6 +1,0 @@
-{
-  "name": "ember-rxjs",
-  "dependencies": {
-    "rxjs": "^4.1.0"
-  }
-}

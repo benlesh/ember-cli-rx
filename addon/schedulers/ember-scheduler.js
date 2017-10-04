@@ -1,8 +1,8 @@
 import Ember from "ember";
-import Rx from "rxjs";
+import Rx from "rxjs/Rx";
 
 var Scheduler = Rx.Scheduler;
-var SingleAssignmentDisposable = Rx.SingleAssignmentDisposable;
+var SingleAssignmentDisposable = Rx.SingleAssignmentDisposabledisposable;
 
 function scheduleNow(state, action) {
 	var scheduler = this;

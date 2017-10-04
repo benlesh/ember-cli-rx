@@ -1,5 +1,5 @@
 import Ember from "ember";
-import Rx from "rxjs";
+import Rx from "rxjs/Rx";
 import buildKey from "../utils/internal-key";
 /**
   Creates a a property that returns an observable which is created
