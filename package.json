@@ -6,11 +6,6 @@
     "ember-addon"
   ],
   "license": "MIT",
-  "author": {
-    "name" : "Albert Li",
-    "email" : "albert_lee@hotmail.com",
-    "url" : "http://www.systembug.me/"
-  },
   "author": "",
   "directories": {
     "doc": "doc",
@@ -23,8 +18,9 @@
     "test": "ember try:each"
   },
   "dependencies": {
+    "ember-auto-import": "^1.2.19",
     "ember-cli-babel": "^6.3.0",
-    "ember-rx-shim": "^0.1.4"
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
