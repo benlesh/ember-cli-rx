@@ -1,6 +1,7 @@
 /* globals Ember */
 
 import Rx from "rxjs/Rx";
+import { computed } from "@ember/object";
 /**
   Creates an observable from observed Ember property changes.
 
@@ -30,7 +31,7 @@ export default function observableFrom(propName) {
     prop = propName.substring(0, arrIndex);
   }
 
-  return Ember.computed({
+  return computed({
     get(/*key*/) {
       var self = this;
       return Rx.Observable.create(function(observer) {

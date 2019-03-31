@@ -1,7 +1,6 @@
-/* globals Ember */
-
+import { computed } from "@ember/object";
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import buildKey from "../utils/internal-key";
 
 /**
@@ -16,7 +15,7 @@ import buildKey from "../utils/internal-key";
 */
 
 export default function observable() {
-  return Ember.computed({
+  return computed({
     get(key) {
       let backingField = buildKey(key);
       if(!this[backingField]) {

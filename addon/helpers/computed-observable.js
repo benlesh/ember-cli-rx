@@ -1,5 +1,6 @@
-import Ember from "ember";
-import Rx from "rxjs/Rx";
+import { computed } from "@ember/object";
+import { once } from "@ember/runloop";
+import * as Rx from "rxjs";
 import buildKey from "../utils/internal-key";
 /**
   Creates a a property that returns an observable which is created
@@ -19,7 +20,7 @@ export default function computedObservable(mapFn, deps) {
     deps = [];
   }
 
-  return Ember.computed({
+  return computed({
     get(key) {
       var backingField = buildKey(key);
       if(!this[backingField]) {
@@ -37,7 +38,7 @@ export default function computedObservable(mapFn, deps) {
 
         deps.forEach(function(depKey) {
           this.addObserver(depKey, this, function(){
-            Ember.run.once(this, handler);
+            once(this, handler);
           });
         }, this);
       }
