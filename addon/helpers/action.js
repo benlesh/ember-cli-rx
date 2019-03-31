@@ -1,3 +1,6 @@
+import { Subject } from 'rxjs/Subject';
+
+
 /**
   Wires up an action to feed an observable property.
 
@@ -34,7 +37,7 @@ export default function action(outputProperty) {
 
   return function(){
     if(!subject) {
-      subject = new Rx.Subject();
+      subject = new Subject();
       this.set(outputProperty, subject);
     }
     var args = [].slice.call(arguments);

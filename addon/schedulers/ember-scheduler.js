@@ -1,7 +1,8 @@
-/* globals Ember */ //HACK: because I'm sharing this with rx-ember
+import Ember from "ember";
+import Rx from "rxjs/Rx";
 
 var Scheduler = Rx.Scheduler;
-var SingleAssignmentDisposable = Rx.SingleAssignmentDisposable;
+var SingleAssignmentDisposable = Rx.SingleAssignmentDisposabledisposable;
 
 function scheduleNow(state, action) {
 	var scheduler = this;
@@ -10,7 +11,7 @@ function scheduleNow(state, action) {
 	return disposable;
 }
 
-function scheduleRelative(state, dueTime, action) {
+function scheduleFuture(state, dueTime, action) {
 	var dt = Scheduler.normalize(dueTime);
 	var disposable = new SingleAssignmentDisposable();
 
@@ -19,10 +20,6 @@ function scheduleRelative(state, dueTime, action) {
 	}, dt);
 
 	return disposable;
-}
-
-function scheduleAbsolute(state, dueTime, action) {
-	return this.scheduleWithRelativeAndState(state, dueTime - Date.now(), action);
 }
 
 function scheduleEmberAction(disposable, queue, target, state, action, scheduler) {
@@ -43,7 +40,10 @@ function scheduleEmberAction(disposable, queue, target, state, action, scheduler
 	@return {Rx.Scheduler}
 */
 export default function emberScheduler(queue, target) {
-	var scheduler = new Scheduler(Date.now, scheduleNow, scheduleRelative, scheduleAbsolute);
+	var scheduler = new Scheduler();
+  scheduler.now = Date.now;
+  scheduler.schedule = scheduleNow;
+  scheduler._scheduleFuture = scheduleFuture;
 	scheduler._target = target;
 	scheduler._queue = queue;
 	return scheduler;

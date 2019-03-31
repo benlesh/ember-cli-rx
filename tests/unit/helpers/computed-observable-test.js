@@ -1,10 +1,11 @@
 import Ember from 'ember';
-import { computedObservable } from 'ember-cli-rx/helpers';
+import { computedObservable } from 'ember-rxjs/helpers';
+import { module, test } from 'qunit';
 
 module('helpers/computed-observable');
 
-test('it should create an observable mapped from a stream of dependency changes', function(){
-	stop();
+test('it should create an observable mapped from a stream of dependency changes', function(assert){
+  let done = assert.async();
 
 	var FooClass = Ember.Object.extend({
 		testStream: computedObservable(function(deps) {
@@ -23,10 +24,10 @@ test('it should create an observable mapped from a stream of dependency changes'
 	var expectedResults = ['foobar', 'whatever'];
 
 	foo.get('testStream').forEach(function(d) {
-		equal(d, expectedResults[i++]);
+		assert.equal(d, expectedResults[i++]);
 
 		if(i === expectedResults.length) {
-			start();
+			done();
 		}
 	});
 
@@ -37,8 +38,8 @@ test('it should create an observable mapped from a stream of dependency changes'
 });
 
 
-test('it should handle property names with .[] in them', function(){
-	stop();
+test('it should handle property names with .[] in them', function(assert){
+	var done = assert.async();
 
 	var FooClass = Ember.Object.extend({
 		testStream: computedObservable(function(deps) {
@@ -57,15 +58,14 @@ test('it should handle property names with .[] in them', function(){
 	var expectedResults = ['foo,bar', 'foo,what,ever'];
 
 	foo.get('testStream').forEach(function(d) {
-		equal(d, expectedResults[i++]);
-
+		assert.equal(d, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+			done();
 		}
 	});
 
 	Ember.run(function(){
-		foo.get('foo').pushObject('what');
+		foo.get('foo').push('what');
 		foo.set('bar', 'ever');
 	});
 });

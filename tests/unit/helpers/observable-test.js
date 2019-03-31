@@ -1,21 +1,22 @@
 import Ember from 'ember';
-import { observable } from 'ember-cli-rx/helpers';
-
+import { observable } from 'ember-rxjs/helpers';
+import { module, test } from 'qunit';
+import Rx from "rxjs/Rx";
 
 module('helpers/observable');
 
-test('it should always supply an observable', function(){
+test('it should always supply an observable', function(assert){
 	var FooClass = Ember.Object.extend({
 		input: observable()
 	});
 
 	var foo = FooClass.create();
 
-	ok(foo.get('input') instanceof Rx.Observable);
+	assert.ok(foo.get('input') instanceof Rx.Observable);
 });
 
-test('it should always give the latest supplied observable and only require one subscription', function(){
-	stop();
+test('it should always give the latest supplied observable and only require one subscription', function(assert){
+	let done = assert.async();
 
 	var FooClass = Ember.Object.extend({
 		input: observable()
@@ -24,17 +25,24 @@ test('it should always give the latest supplied observable and only require one 
 	var i = 0;
 	var expectedResults = [23, 42, 'banana', 'stand'];
 
-	var foo = FooClass.create({
-		input: Rx.Observable.fromArray([23, 42]),
-	});
+  // DO NOT INIT observable when create
+  /*
+  var foo = FooClass.create({
+    input: Rx.Observable.fromArray([23, 42])
+  });
+  */
+	var foo = FooClass.create();
 
-	var subscription = foo.get('input').forEach(function(x) {
-		deepEqual(x, expectedResults[i++]);
-
+	foo.get('input').forEach(function(x) {
+		assert.deepEqual(x, expectedResults[i++]);
 		if(i === expectedResults.length) {
-			start();
+      done();
 		}
 	});
 
-	foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
+  Ember.run(function(){
+    foo.set("input", Rx.Observable.fromArray([23, 42]));
+    foo.set('input', Rx.Observable.fromArray(['banana', 'stand']));
+  });
+
 });
